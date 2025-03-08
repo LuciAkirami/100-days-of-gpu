@@ -35,7 +35,8 @@ int main(){
 
     // Create CUDA events for measuring execution time
     cudaEvent_t start, stop;
-    cudaEventCreate(&start);  // Create start event
+    // cudaEventCreate: The device will record a time stamp for the event when it reaches that event in the stream.
+    cudaEventCreate(&start);  // Create start event 
     cudaEventCreate(&stop);   // Create stop event
 
     // Allocate memory on the GPU for the x and y arrays

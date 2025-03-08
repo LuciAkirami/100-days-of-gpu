@@ -66,11 +66,13 @@ Now that we have a means of accurately timing kernel execution, we will use it t
 
 ### Theoretical Bandwidth
 
-Theoretical bandwidth can be calculated using hardware specifications available in the product literature. For example, the NVIDIA RTX 3060 12GB VRAM uses DDR (double data rate) RAM(GDDR6 memory, which stands for "Graphics Double Data Rate 6") with a memory clock rate of 1.32 GHz and a 192-bit wide memory interface. Using these data items, the peak theoretical memory bandwidth of the NVIDIA Tesla M2050 is 148 GB/sec, as computed in the following.
+Theoretical bandwidth can be calculated using hardware specifications available in the product literature. For example, the NVIDIA RTX 3060 12GB VRAM uses DDR (double data rate) RAM(GDDR6 memory, which stands for "Graphics Double Data Rate 6") with a memory clock rate of 7.5 GHz and a 192-bit wide memory interface. Using these data items, the peak theoretical memory bandwidth of the NVIDIA Tesla M2050 is 148 GB/sec, as computed in the following.
 
-$$BW_{Theoretical} = \frac{1.32 * 10^9 * (192/8) * 2}{10^9} = 63.36 GB/s$$
+$$BW_{Theoretical} = \frac{7.5 * 10^9 * (192/8) * 2}{10^9} = 360 GB/s$$
 
-In this calculation, we convert the memory clock rate to Hz, multiply it by the interface width (divided by 8, to convert bits to bytes) and multiply by 2 due to the double data rate. Finally, we divide by $10^9$ to convert the result to GB/s. In case of boost clock frequency where its 1.78 GHz, the bandwidth rises to 85.44 GB/s
+In this calculation, we convert the memory clock rate to Hz, multiply it by the interface width (divided by 8, to convert bits to bytes) and multiply by 2 due to the double data rate. Finally, we divide by $10^9$ to convert the result to GB/s.
+
+**Note:** Do not confuse Memory Clock with Core Clock. The core clock of 3060 ranges from 1.36 to 1.75Ghz(based on boosting) while the memory clock is 7.5Ghz and as its a DDR its effectively 7.5x2 = 15Ghz
 
 **Double Data Rate Functionality:** This means the memory can transfer data twice per clock cycle, improving overall memory bandwidth.
 
