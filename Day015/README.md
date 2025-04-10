@@ -14,8 +14,8 @@ Understanding shared memory and synchronization is essential for writing high-pe
 There are two main kernel functions in the code:
 
 ```cpp
-__global__ void staticReverse(int *d, int n);
-__global__ void dynamicReverse(int *d, int n);
+__global__ void staticReverseKernel(int *d, int n);
+__global__ void dynamicReverseKernel(int *d, int n);
 ```
 
 Both perform the same logic:
@@ -46,7 +46,7 @@ Shared memory is a **low-latency**, **high-bandwidth**, on-chip memory space **s
 ## 🧠 Static Shared Memory: Step-by-Step Breakdown
 
 ```cpp
-__global__ void staticReverse(int *d, int n) {
+__global__ void staticReverseKernel(int *d, int n) {
   __shared__ int s[64];       // Statically declared shared memory
   int t = threadIdx.x;
   int tr = n - t - 1;
@@ -88,7 +88,7 @@ Global Memory (d):   [ 63 62 61 60 ... 2 1 0 ]
 ## ⚙️ Dynamic Shared Memory: More Flexible
 
 ```cpp
-__global__ void dynamicReverse(int *d, int n) {
+__global__ void dynamicReverseKernel(int *d, int n) {
   extern __shared__ int s[];   // Size determined at runtime
   int t = threadIdx.x;
   int tr = n - t - 1;
@@ -101,7 +101,7 @@ __global__ void dynamicReverse(int *d, int n) {
 ### 🧠 Dynamic Shared Memory Allocation at Launch
 
 ```cpp
-dynamicReverse<<<1, 64, 64 * sizeof(int)>>>(d_d, n);
+dynamicReverseKernel<<<1, 64, 64 * sizeof(int)>>>(d_d, n);
 ```
 
 -   The third parameter (`64 * sizeof(int)`) tells CUDA to allocate **64 integers** in shared memory for this kernel invocation.
